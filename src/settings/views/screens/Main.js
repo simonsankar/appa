@@ -32,7 +32,6 @@ export default ({
   const {user} = componentState;
   handleOpenUrl = handleOpenUrl.bind(null, 'Settings');
 
-  DeepLinking.addScheme('appadoes://');
   useEffect(() => {
     Linking.addEventListener('url', handleOpenUrl);
     Linking.getInitialURL()

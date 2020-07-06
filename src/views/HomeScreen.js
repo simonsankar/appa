@@ -72,7 +72,7 @@ const HomeScreen = ({
         <Screen name="Agenda" component={Tasks} />
         <Screen name="Logs" component={Logs} />
         <Screen name="Reports" component={Reports} />
-        <Screen name="Settings" component={Settings} />
+        <Screen name="Settings" component={WrappedSettings} />
         <Screen name="About" component={About} />
         <Screen name="Customize" component={Customize} />
       </Navigator>
