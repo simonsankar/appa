@@ -39,16 +39,9 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const HomeScreen = ({
-  navigation,
-  onBoarded,
-  token,
-  logout,
-  user,
-  setUserInfo,
-}) => {
+const HomeScreen = ({navigation, onBoarded, token, logout, user}) => {
   const [loading, setLoading] = useState(false);
-  const WrappedSettings = (props) => ConnectHOC(Settings, props);
+  const WrappedSettings = ConnectHOC(Settings);
 
   const logoutHandler = () => {
     logout();
@@ -59,7 +52,6 @@ const HomeScreen = ({
     return (
       <Navigator
         screenOptions={{gestureEnabled: true}}
-        initialParams={{user}}
         drawerContent={(props) => (
           <MainMenu
             {...props}

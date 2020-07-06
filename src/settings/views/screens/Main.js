@@ -21,7 +21,7 @@ export default ({
   navigation,
   route,
   handleConnect,
-  handleOpenUrl,
+  handleLogout,
   loading,
   componentState,
 }) => {
@@ -30,26 +30,9 @@ export default ({
   const [currentColour, setCurrentColour] = useState(themeContext.colour.name);
   const styles = useStyleSheet(themedStyles);
   const {user} = componentState;
-  handleOpenUrl = handleOpenUrl.bind(null, 'Settings');
-
-  useEffect(() => {
-    Linking.addEventListener('url', handleOpenUrl);
-    Linking.getInitialURL()
-      .then((url) => {
-        console.log('Any url?', url);
-        if (url) {
-          handleOpenUrl(url, 'Settings');
-        }
-      })
-      .catch((error) => console.log('Errorz', error));
-
-    return () => {
-      return Linking.removeEventListener('url', handleOpenUrl);
-    };
-  });
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1}} testID="ConnectSafeAreaView">
       <TopBar title="Settings" navigation={navigation} route={route} />
       <Layout style={styles.container}>
         <ScrollView>
@@ -60,7 +43,7 @@ export default ({
                 appearance="primary"
                 size="giant"
                 style={styles.buttonConnect}
-                onPress={handleConnect}>
+                onPress={() => handleConnect('Settings')}>
                 WeOS Connect
               </Button>
               <Divider style={styles.divider} />
@@ -71,6 +54,15 @@ export default ({
             <Layout style={styles.column1}>
               {user && (
                 <>
+                  <Button
+                    testID="LogoutBtn"
+                    appearance="primary"
+                    size="giant"
+                    style={styles.buttonLogout}
+                    onPress={handleLogout}>
+                    Logout
+                  </Button>
+                  <Divider style={styles.divider} />
                   <Text category="h5">ACCOUNT</Text>
                   <Layout style={styles.row}>
                     <Text
@@ -252,6 +244,16 @@ const themedStyles = StyleService.create({
   },
   buttonConnect: {
     marginTop: 32,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 7,
+    elevation: 5,
+  },
+  buttonLogout: {
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
